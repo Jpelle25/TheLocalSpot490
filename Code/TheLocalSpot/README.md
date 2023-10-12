@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-# TheLocalSpot490
-=======
 # Flow CRM Tutorial
 
 This project can be used as a starting point to create your own Vaadin application with Spring Boot.
@@ -62,4 +59,3 @@ Once the Docker image is correctly built, you can test it locally using
 ```
 docker run -p 8080:8080 flowcrmtutorial:latest
 ```
->>>>>>> 05f73051 (Generated project)

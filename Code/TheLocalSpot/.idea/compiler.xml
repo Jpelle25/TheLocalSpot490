@@ -6,17 +6,13 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="flowcrmtutorial" />
+        <module name="TheLocalSpot" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="TheLocalSpot" target="17" />
-    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="TheLocalSpot" options="-parameters" />
-      <module name="flowcrmtutorial" options="-parameters" />
     </option>
   </component>
 </project>
