@@ -4,13 +4,12 @@ import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
-import jakarta.annotation.security.RolesAllowed;
-import thelocalspot.application.views.list.MainLayout;
+import jakarta.annotation.security.PermitAll;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 
 @PageTitle("Admin")
-@Route(value = "admin-coordinator", layout = MainLayout.class)
-@RolesAllowed("admin")
+@Route(value = "admin-coordinator", layout = AdminMainLayout.class)
+@PermitAll
 public class CoordinatorView extends VerticalLayout{
 
     public CoordinatorView() {
