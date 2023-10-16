@@ -5,12 +5,11 @@ import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
-import jakarta.annotation.security.RolesAllowed;
-import thelocalspot.application.views.list.MainLayout;
+import jakarta.annotation.security.PermitAll;
 
 @PageTitle("General User")
-@Route(value = "user-events", layout = MainLayout.class)
-@RolesAllowed("user")
+@Route(value = "user-events", layout = UserMainLayout.class)
+@PermitAll
 public class UserEventsView extends VerticalLayout {
 
     public UserEventsView() {
