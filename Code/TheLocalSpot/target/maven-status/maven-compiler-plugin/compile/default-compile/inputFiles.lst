@@ -8,7 +8,6 @@
 /Users/jpelle/Documents/GitHub/TheLocalSpot490/Code/TheLocalSpot/src/main/java/thelocalspot/application/data/entity/Company.java
 /Users/jpelle/Documents/GitHub/TheLocalSpot490/Code/TheLocalSpot/src/main/java/thelocalspot/application/views/list/AfterAuthenticationView.java
 /Users/jpelle/Documents/GitHub/TheLocalSpot490/Code/TheLocalSpot/src/main/java/thelocalspot/application/data/entity/Contact.java
-/Users/jpelle/Documents/GitHub/TheLocalSpot490/Code/TheLocalSpot/src/main/java/thelocalspot/application/views/list/MainLayout.java
 /Users/jpelle/Documents/GitHub/TheLocalSpot490/Code/TheLocalSpot/src/main/java/thelocalspot/application/security/SecurityConfig.java
 /Users/jpelle/Documents/GitHub/TheLocalSpot490/Code/TheLocalSpot/src/main/java/thelocalspot/application/security/SecurityService.java
 /Users/jpelle/Documents/GitHub/TheLocalSpot490/Code/TheLocalSpot/src/main/java/thelocalspot/application/views/list/admin/CoordinatorView.java
@@ -20,6 +19,7 @@
 /Users/jpelle/Documents/GitHub/TheLocalSpot490/Code/TheLocalSpot/src/main/java/thelocalspot/application/views/list/admin/AdminWelcome.java
 /Users/jpelle/Documents/GitHub/TheLocalSpot490/Code/TheLocalSpot/src/main/java/thelocalspot/application/views/list/admin/GenUserView.java
 /Users/jpelle/Documents/GitHub/TheLocalSpot490/Code/TheLocalSpot/src/main/java/thelocalspot/application/views/list/sharedfunctions/UpdateInfoView.java
+/Users/jpelle/Documents/GitHub/TheLocalSpot490/Code/TheLocalSpot/src/main/java/thelocalspot/application/views/list/RegistrationView.java
 /Users/jpelle/Documents/GitHub/TheLocalSpot490/Code/TheLocalSpot/src/main/java/thelocalspot/application/views/list/coordinator/CoordinatorMainLayout.java
 /Users/jpelle/Documents/GitHub/TheLocalSpot490/Code/TheLocalSpot/src/main/java/thelocalspot/application/data/entity/Status.java
 /Users/jpelle/Documents/GitHub/TheLocalSpot490/Code/TheLocalSpot/src/main/java/thelocalspot/application/views/list/host/PlacesView.java
