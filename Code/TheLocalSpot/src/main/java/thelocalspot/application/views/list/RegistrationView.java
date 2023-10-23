@@ -17,7 +17,9 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.core.OAuth2AuthenticatedPrincipal;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import thelocalspot.application.data.entity.GenUser;
+import thelocalspot.application.data.entity.Host;
 import thelocalspot.application.data.service.GenUserService;
+import thelocalspot.application.data.service.HostService;
 import thelocalspot.application.views.list.admin.AdminWelcome;
 import thelocalspot.application.views.list.coordinator.CoordinatorWelcome;
 import thelocalspot.application.views.list.genuser.UserWelcome;
@@ -31,9 +33,11 @@ public class RegistrationView extends VerticalLayout {
 
     private static final String LOGOUT_SUCCESS_URL = "/";
     GenUserService genUserService;
+    HostService hostService;
 
-    public RegistrationView(GenUserService genUserService) {
+    public RegistrationView(GenUserService genUserService, HostService hostService) {
         this.genUserService = genUserService;
+        this.hostService = hostService;
 
         Button logoutButton = new Button("Logout", click -> {
             UI.getCurrent().getPage().setLocation(LOGOUT_SUCCESS_URL);
@@ -135,14 +139,40 @@ public class RegistrationView extends VerticalLayout {
             }
             if(Objects.equals(roleSelection.getValue(), "Host")) {
                 removeAll();
-                finalize.addClickListener(buttonClickEvent -> finalize.getUI().ifPresent(ui -> ui.navigate(HostWelcome.class)));
+                TextField address = new TextField("Home Address");
+                address.setHelperText("Format: 101 Cherry Lane");
+                TextField zipCode = new TextField("Zip Code");
+                zipCode.setMaxLength(5);
+                TextField phoneNumber = new TextField("Phone Number");
+                phoneNumber.setPattern("^[+]?[(]?[0-9]{3}[)]?[-s.]?[0-9]{3}[-s.]?[0-9]{4,6}$");
+                phoneNumber.setAllowedCharPattern("[0-9()+-]");
+                phoneNumber.setMinLength(5);
+                phoneNumber.setMaxLength(18);
+                phoneNumber.setHelperText("Format: (123)456-7890");
                 add(
                         firstName,
                         lastName,
                         emailAddress,
                         roleSelection,
+                        address,
+                        zipCode,
+                        phoneNumber,
                         finalize,
                         logoutButton);
+                finalize.addClickListener(buttonClickEvent -> {
+                    if(address.isEmpty() ||
+                            zipCode.isEmpty() ||
+                            zipCode.isEmpty() ||
+                            phoneNumber.isEmpty()){
+                        Notification nonCompleteRegistration = Notification.show("Please enter in all the fields for registration", 3000, Notification.Position.BOTTOM_CENTER);
+                        nonCompleteRegistration.addThemeVariants(NotificationVariant.LUMO_ERROR);
+                    }
+                    else{
+                        hostService.saveHost(new Host(givenName, familyName, email, roleSelection.getValue(), address.getValue(), Integer.valueOf(zipCode.getValue()), phoneNumber.getValue()));
+                        finalize.getUI().ifPresent(ui -> ui.navigate(HostWelcome.class));
+                    }
+                });
+
             }
         });
     }
