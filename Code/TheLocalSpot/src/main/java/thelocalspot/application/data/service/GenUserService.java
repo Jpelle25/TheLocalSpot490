@@ -23,6 +23,11 @@ public class GenUserService {
         genUserRepository.save(genUser);
     }
 
+    public List<GenUser> findGenUser(String email){
+
+        return genUserRepository.search(email);
+    }
+
     public List<GenUser> getUserDetails(){
 
         return genUserRepository.findAll();

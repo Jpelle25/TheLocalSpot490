@@ -10,10 +10,9 @@ import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.router.RouterLink;
 import com.vaadin.flow.server.VaadinServletRequest;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
+import thelocalspot.application.views.list.AfterAuthenticationView;
 
 public class UserMainLayout extends AppLayout {
-
-    private static final String LOGOUT_SUCCESS_URL = "/";
 
     public UserMainLayout() {
 
@@ -27,13 +26,8 @@ public class UserMainLayout extends AppLayout {
 
 //        Button accountDetails = new Button("Account Details");
 //        accountDetails.addClickListener(buttonClickEvent -> accountDetails.getUI().ifPresent(ui -> ui.navigate(CheckAccountView.class)));
-        Button logoutButton = new Button("Logout", click -> {
-            UI.getCurrent().getPage().setLocation(LOGOUT_SUCCESS_URL);
-            SecurityContextLogoutHandler logoutHandler = new SecurityContextLogoutHandler();
-            logoutHandler.logout(
-                    VaadinServletRequest.getCurrent().getHttpServletRequest(), null,
-                    null);
-        });
+        Button logoutButton = new Button("Logout");
+        logoutButton.addClickListener(buttonClickEvent -> logoutButton.getUI().ifPresent(ui -> ui.navigate(AfterAuthenticationView.class)));
 
         HorizontalLayout header = new HorizontalLayout(new DrawerToggle(), logo, logoutButton);
 

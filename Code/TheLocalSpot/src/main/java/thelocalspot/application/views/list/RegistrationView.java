@@ -4,6 +4,7 @@ import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.combobox.MultiSelectComboBox;
+import com.vaadin.flow.component.datetimepicker.DateTimePicker;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.notification.NotificationVariant;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
@@ -17,12 +18,17 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.core.OAuth2AuthenticatedPrincipal;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import thelocalspot.application.data.entity.GenUser;
+import thelocalspot.application.data.entity.Ticket;
 import thelocalspot.application.data.service.GenUserService;
 import thelocalspot.application.views.list.admin.AdminWelcome;
 import thelocalspot.application.views.list.coordinator.CoordinatorWelcome;
 import thelocalspot.application.views.list.genuser.UserWelcome;
 import thelocalspot.application.views.list.host.HostWelcome;
 
+import java.time.LocalDate;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 
 @Route("registration-role")
