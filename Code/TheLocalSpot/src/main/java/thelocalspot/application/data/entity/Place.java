@@ -31,7 +31,7 @@ public class Place {
         this.id = id;
     }
 
-    public Long getId() {
+    public Long getPlaceId() {
         return id;
     }
 

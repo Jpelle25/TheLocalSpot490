@@ -27,4 +27,14 @@ public class CoordUserService {
 
         return coordUserRepository.findAll();
     }
+
+    public List<CoordUser> getCoordUserId(Long coordId){
+
+        return coordUserRepository.rememberId(coordId);
+    }
+
+    public List<CoordUser> getCoordUserEmail(String email){
+
+        return coordUserRepository.rememberEmail(email);
+    }
 }

@@ -10,7 +10,11 @@ import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.component.timepicker.TimePicker;
 import com.vaadin.flow.data.binder.BeanValidationBinder;
 import com.vaadin.flow.data.binder.Binder;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.oauth2.core.OAuth2AuthenticatedPrincipal;
 import thelocalspot.application.data.entity.*;
+import thelocalspot.application.data.service.CoordUserService;
 import thelocalspot.application.data.service.EventService;
 
 import java.time.LocalDate;
@@ -21,8 +25,9 @@ import java.util.Locale;
 public class EventForm extends FormLayout {
 
     EventService eventService;
+    CoordUserService coordUserService;
     Binder<Event> binder = new BeanValidationBinder<>(Event.class);
-
+    TextField coordId;
     TextField eventName = new TextField("Event Name");
     TimePicker eventTime = new TimePicker();
     DatePicker dateStart = new DatePicker();
@@ -39,13 +44,15 @@ public class EventForm extends FormLayout {
     Button cancel = new Button("Cancel");
     private Event event;
     //TODO HostService hosts PlaceService places CoordService coords
-    public EventForm(List<Host> hosts, List<Place> places, EventService eventService) {
-        this.eventService= eventService;
+    public EventForm(List<Host> hosts, List<Place> places, EventService eventService, CoordUserService coordUserService) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        OAuth2AuthenticatedPrincipal principal = (OAuth2AuthenticatedPrincipal) authentication.getPrincipal();
+        this.eventService = eventService;
+        this.coordUserService = coordUserService;
         addClassName("event-form");
         binder.bindInstanceFields(this);
         host.setItems(hosts);
         host.setItemLabelGenerator(Host::getHostName);
-
         place.setItems(places);
         place.setItemLabelGenerator(Place::getPlaceName);
         eventTime.setLabel("Start Time");
@@ -58,8 +65,14 @@ public class EventForm extends FormLayout {
         dateEnd.setValue(LocalDate.now(ZoneId.systemDefault()));
         ticketPrice.setHelperText("Please enter in price with decimal point!");
         maxTickets.setMaxLength(6);
+        List<CoordUser> coordUsers = coordUserService.getCoordUserEmail(principal.getAttribute("email"));
+        coordId = new TextField("Coord Id", String.valueOf(coordUsers.get(0).getCoordId()), "");
+        coordId.setReadOnly(true);
         add(
                 eventName,
+                coordId,
+                host,
+                place,
                 eventTime,
                 dateStart,
                 dateEnd,
@@ -67,8 +80,6 @@ public class EventForm extends FormLayout {
                 eventInfo,
                 maxTickets,
                 ticketPrice,
-                host,
-                place,
                 finalize
         );
         finalize.addClickListener(buttonClickEvent ->{
@@ -86,7 +97,7 @@ public class EventForm extends FormLayout {
                 nonCompleteRegistration.addThemeVariants(NotificationVariant.LUMO_ERROR);
             }
             else {
-                eventService.saveEvent(new Event(eventName.getValue(), coords,  hosts, places, true, eventTime.getValue(), dateStart.getValue(), dateEnd.getValue(), eventCapacity.getValue(), eventInfo.getValue(), maxTickets.getValue(), Float.valueOf(ticketPrice.getValue())));
+                eventService.saveEvent(new Event(eventName.getValue(), coordId.getValue(),  String.valueOf(host.getValue().getHostId()), String.valueOf(place.getValue().getPlaceId()), true, eventTime.getValue(), dateStart.getValue(), dateEnd.getValue(), eventCapacity.getValue(), eventInfo.getValue(), maxTickets.getValue(), Float.valueOf(ticketPrice.getValue())));
             }
         });
     }

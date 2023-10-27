@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Set;
 @Entity
 public class Event {
@@ -12,15 +14,15 @@ public class Event {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private Long coordUserId;
-    private Long hostUserId;
-    private Long placeId;
+    private String coordUserId;
+    private String hostUserId;
+    private String placeId;
 
-    private boolean eventSatus;
+    private boolean eventStatus;
     private String eventName;
-    private String eventTime;
-    private String dateStart;
-    private String dateEnd;
+    private LocalTime eventTime;
+    private LocalDate dateStart;
+    private LocalDate dateEnd;
     private String eventCapacity;
     private String eventInfo;
     private String maxTickets;
@@ -30,11 +32,11 @@ public class Event {
     public Event() {
     }
 
-    public Event(String eventName, Long coordUserId, Long hostUserId, Long placeId, boolean eventSatus, String eventTime, String dateStart, String dateEnd, String eventCapacity, String eventInfo, String maxTickets, String availableTickets, Float ticketPrice) {
+    public Event(String eventName, String coordUserId, String hostUserId, String placeId, boolean eventStatus, LocalTime eventTime, LocalDate dateStart, LocalDate dateEnd, String eventCapacity, String eventInfo, String maxTickets, Float ticketPrice) {
         this.coordUserId = coordUserId;
         this.hostUserId = hostUserId;
         this.placeId = placeId;
-        this.eventSatus = eventSatus;
+        this.eventStatus = eventStatus;
         this.eventName = eventName;
         this.eventTime = eventTime;
         this.dateStart = dateStart;
@@ -42,7 +44,7 @@ public class Event {
         this.eventCapacity = eventCapacity;
         this.eventInfo = eventInfo;
         this.maxTickets = maxTickets;
-        this.availableTickets = availableTickets;
+        this.availableTickets = maxTickets;
         this.ticketPrice = ticketPrice;
     }
 }

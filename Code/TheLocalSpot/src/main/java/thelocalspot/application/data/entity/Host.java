@@ -35,7 +35,7 @@ public class Host {
         this.id = id;
     }
 
-    public Long getId() {
+    public Long getHostId() {
         return id;
     }
 
