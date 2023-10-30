@@ -1,8 +1,11 @@
 package thelocalspot.application.data.service;
 
 import org.springframework.stereotype.Service;
+import thelocalspot.application.data.entity.GenUser;
 import thelocalspot.application.data.entity.Place;
 import thelocalspot.application.data.repository.PlaceRepository;
+
+import java.util.List;
 
 @Service
 public class PlaceService {
@@ -17,5 +20,12 @@ public class PlaceService {
             return;
         }
         placeRepository.save(place);
+    }
+    public List<Place> getHostId(Long hostId){
+
+        return placeRepository.search(hostId);
+    }
+    public List<Place> findAllPlaces(){
+        return placeRepository.findAll();
     }
 }

@@ -2,6 +2,7 @@ package thelocalspot.application.data.service;
 
 import org.springframework.stereotype.Service;
 import thelocalspot.application.data.entity.Host;
+import thelocalspot.application.data.entity.Place;
 import thelocalspot.application.data.repository.HostRepository;
 
 import java.util.List;
@@ -23,6 +24,10 @@ public class HostService {
 
     public List<Host> getUserDetails(){
 
+        return hostRepository.findAll();
+    }
+
+    public List<Host> findAllHosts(){
         return hostRepository.findAll();
     }
 }

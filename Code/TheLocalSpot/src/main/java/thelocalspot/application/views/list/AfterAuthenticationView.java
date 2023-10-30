@@ -12,14 +12,22 @@ import org.springframework.security.oauth2.core.OAuth2AuthenticatedPrincipal;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import thelocalspot.application.data.entity.GenUser;
+import thelocalspot.application.data.service.GenUserService;
+import thelocalspot.application.views.list.genuser.UserWelcome;
+
+import java.util.List;
 
 @Route("")
 @PermitAll
 public class AfterAuthenticationView extends VerticalLayout {
 
     private static final String LOGOUT_SUCCESS_URL = "/";
+    GenUserService genUserService;
 
-    public AfterAuthenticationView() {
+    public AfterAuthenticationView(GenUserService genUserService) {
+
+        this.genUserService = genUserService;
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         OAuth2AuthenticatedPrincipal principal = (OAuth2AuthenticatedPrincipal) authentication.getPrincipal();
@@ -32,8 +40,17 @@ public class AfterAuthenticationView extends VerticalLayout {
         H2 header = new H2("Hello " + givenName + " " + familyName + " (" + email + ")");
         Image image = new Image(picture, "User Image");
 
-        Button reigster = new Button("Register Role");
-        reigster.addClickListener(buttonClickEvent -> reigster.getUI().ifPresent(ui -> ui.navigate(RegistrationView.class)));
+        Button register = new Button("Register Role");
+        register.addClickListener(buttonClickEvent -> {
+            List<GenUser> genUsers = genUserService.findGenUser(email);
+            if(genUsers.isEmpty()){
+                register.getUI().ifPresent(ui -> ui.navigate(RegistrationView.class));
+            }
+            else{
+                register.getUI().ifPresent(ui -> ui.navigate(UserWelcome.class));
+            }
+        });
+        register.addClickListener(buttonClickEvent -> register.getUI().ifPresent(ui -> ui.navigate(RegistrationView.class)));
 
 //        TextArea textArea = new TextArea(principal.)
 
@@ -46,7 +63,7 @@ public class AfterAuthenticationView extends VerticalLayout {
         });
 
         setAlignItems(Alignment.CENTER);
-        add(header, image, reigster, logoutButton);
+        add(header, image, register, logoutButton);
         add(image);
     }
 }

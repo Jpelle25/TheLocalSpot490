@@ -5,11 +5,8 @@ import jakarta.persistence.*;
 import java.util.Set;
 
 @Entity
-public class GenUser {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+@Table(name = "GENUSER")
+public class GenUser extends AbstractEntity {
     private String firstName;
     private String lastName;
     private String email;
@@ -33,21 +30,78 @@ public class GenUser {
         this.preferences = preferencesToString(preferences);
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Long getId() {
-        return id;
-    }
 
     public String printDetailsTest(Set<String> preferences) {
         return String.format(
-                "General User[id=%d, firstName='%s', lastName='%s', email='%s', role='%s', address='%s', zipCode='%d', phoneNumber='%s', preferences='%s']",
-                id, firstName, lastName, email, role, address, zipCode, phoneNumber, preferencesToString(preferences));
+                "General User[firstName='%s', lastName='%s', email='%s', role='%s', address='%s', zipCode='%d', phoneNumber='%s', preferences='%s']",
+                firstName, lastName, email, role, address, zipCode, phoneNumber, preferencesToString(preferences));
     }
 
     private String preferencesToString(Set<String> preferences){
         return String.join(",",preferences);
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public Integer getZipCode() {
+        return zipCode;
+    }
+
+    public void setZipCode(Integer zipCode) {
+        this.zipCode = zipCode;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public String getPreferences() {
+        return preferences;
+    }
+
+    public void setPreferences(String preferences) {
+        this.preferences = preferences;
     }
 }
