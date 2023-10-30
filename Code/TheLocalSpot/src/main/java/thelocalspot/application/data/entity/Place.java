@@ -1,46 +1,66 @@
 package thelocalspot.application.data.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 @Entity
-public class Place {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+@Table(name = "PLACES")
+public class Place extends AbstractEntity{
     private Long hostId;
     private String placeName;
-    private String address;
-    private Integer capacity;
-    private String information;
+    private String placeAddress;
+    private Integer placeCapacity;
+    private String placeInfo;
 
     public Place(){
 
     }
 
-    public Place(String placeName, String address, Integer capacity, String information){
+    public Place(String placeName, String placeAddress, Integer placeCapacity, String placeInfo){
         this.placeName = placeName;
-        this.address = address;
-        this.capacity = capacity;
-        this.information = information;
+        this.placeAddress = placeAddress;
+        this.placeCapacity = placeCapacity;
+        this.placeInfo = placeInfo;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Long getPlaceId() {
-        return id;
-    }
 
     public String getPlaceName() {
         return placeName;
     }
 
+
     public void setPlaceName(String placeName) {
         this.placeName = placeName;
     }
 
+    public Long getHostId() {
+        return hostId;
+    }
+
+    public void setHostId(Long hostId) {
+        this.hostId = hostId;
+    }
+
+    public String getAddress() {
+        return placeAddress;
+    }
+
+    public void setAddress(String address) {
+        this.placeAddress = placeAddress;
+    }
+
+    public Integer getCapacity() {
+        return placeCapacity;
+    }
+
+    public void setCapacity(Integer capacity) {
+        this.placeCapacity = placeCapacity;
+    }
+
+    public String getInformation() {
+        return placeInfo;
+    }
+
+    public void setInformation(String information) {
+        this.placeInfo = placeInfo;
+    }
 }

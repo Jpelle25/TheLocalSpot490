@@ -6,12 +6,11 @@ import jakarta.persistence.criteria.CriteriaBuilder;
 import java.util.Set;
 
 @Entity
-public class CoordUser {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long coordId;
+@Table(name = "COORDINATOR")
+public class CoordUser extends AbstractEntity{
     private String firstName;
     private String lastName;
+    @Column(name = "GENRE")
     private String coordGenre;
     private String email;
     private String address;
@@ -23,22 +22,18 @@ public class CoordUser {
 
     }
 
-    public CoordUser(String firstName, String lastName, String coordGenre, String email, String role, String address, int zipCode, String phoneNumber) {
+    public CoordUser(String firstName, String lastName, Set<String> coordGenre, String email, String role, String address, int zipCode, String phoneNumber) {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.coordGenre = coordGenre;
+        this.coordGenre = genresToString(coordGenre);
         this.email = email;
         this.role = role;
         this.address = address;
         this.zipCode = zipCode;
         this.phoneNumber = phoneNumber;
     }
-
-    public void setCoordId(Long coordId) {
-        this.coordId = coordId;
-    }
-    public Long getCoordId() {
-        return coordId;
+    private String genresToString(Set<String> preferences){
+        return String.join(",",preferences);
     }
     public String getCoordName() {
         return firstName + " " + lastName;
@@ -49,5 +44,65 @@ public class CoordUser {
     }
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public String getCoordGenre() {
+        return coordGenre;
+    }
+
+    public void setCoordGenre(String coordGenre) {
+        this.coordGenre = coordGenre;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public Integer getZipCode() {
+        return zipCode;
+    }
+
+    public void setZipCode(Integer zipCode) {
+        this.zipCode = zipCode;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 }

@@ -7,7 +7,7 @@ import thelocalspot.application.data.entity.CoordUser;
 import java.util.List;
 public interface CoordUserRepository extends JpaRepository<CoordUser, Long> {
     @Query("select c from CoordUser c " +
-            "where c.coordId = :searchTerm")
+            "where c.id = :searchTerm")
     List<CoordUser> rememberId(Long searchTerm);
 
     @Query("select c from CoordUser c " +

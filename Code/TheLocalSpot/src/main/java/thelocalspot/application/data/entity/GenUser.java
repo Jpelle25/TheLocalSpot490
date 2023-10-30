@@ -5,11 +5,8 @@ import jakarta.persistence.*;
 import java.util.Set;
 
 @Entity
-public class GenUser {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+@Table(name = "GENUSER")
+public class GenUser extends AbstractEntity {
     private String firstName;
     private String lastName;
     private String email;
@@ -33,18 +30,11 @@ public class GenUser {
         this.preferences = preferencesToString(preferences);
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Long getId() {
-        return id;
-    }
 
     public String printDetailsTest(Set<String> preferences) {
         return String.format(
-                "General User[id=%d, firstName='%s', lastName='%s', email='%s', role='%s', address='%s', zipCode='%d', phoneNumber='%s', preferences='%s']",
-                id, firstName, lastName, email, role, address, zipCode, phoneNumber, preferencesToString(preferences));
+                "General User[firstName='%s', lastName='%s', email='%s', role='%s', address='%s', zipCode='%d', phoneNumber='%s', preferences='%s']",
+                firstName, lastName, email, role, address, zipCode, phoneNumber, preferencesToString(preferences));
     }
 
     private String preferencesToString(Set<String> preferences){
