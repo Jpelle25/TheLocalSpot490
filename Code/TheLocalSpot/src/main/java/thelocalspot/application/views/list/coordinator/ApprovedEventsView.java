@@ -49,6 +49,7 @@ public class ApprovedEventsView extends VerticalLayout {
         grid.addColumn(event -> event.getPlace().getPlaceName()).setHeader("Place");
         grid.getColumns().forEach(col -> col.setAutoWidth(true));
     }
+
     private Component getContent() {
         HorizontalLayout content = new HorizontalLayout(grid);
         content.addClassName("content");
@@ -58,7 +59,7 @@ public class ApprovedEventsView extends VerticalLayout {
 
     private void updateList(OAuth2AuthenticatedPrincipal principal) {
         List<CoordUser> coordUsers = coordUserService.getCoordUserEmail(principal.getAttribute("email"));
-        if(!coordUsers.isEmpty()) {
+        if (!coordUsers.isEmpty()) {
 
             List<Event> events = eventService.findAllEventsByIdAndApprove(coordUsers.get(0));
             grid.setItems(events);

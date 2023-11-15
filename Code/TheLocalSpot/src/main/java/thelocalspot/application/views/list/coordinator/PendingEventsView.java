@@ -1,4 +1,5 @@
 package thelocalspot.application.views.list.coordinator;
+
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
@@ -20,8 +21,10 @@ import thelocalspot.application.data.service.CoordUserService;
 import thelocalspot.application.data.service.EventService;
 import thelocalspot.application.data.service.HostService;
 import thelocalspot.application.data.service.PlaceService;
+
 import java.util.ArrayList;
 import java.util.List;
+
 @PageTitle("Coordinator")
 @Route(value = "coordinator-pending-events", layout = CoordinatorMainLayout.class)
 @PermitAll
@@ -32,6 +35,7 @@ public class PendingEventsView extends VerticalLayout {
     private final PlaceService placeService;
     Grid<Event> grid;
     EventForm form;
+
     public PendingEventsView(CoordUserService coordUserService, HostService hostService, EventService eventService, PlaceService placeService) {
         this.coordUserService = coordUserService;
         this.hostService = hostService;
@@ -50,18 +54,21 @@ public class PendingEventsView extends VerticalLayout {
         updateList(principal);
         closeEditor();
     }
+
     private void closeEditor() {
         form.setVisible(false);
         removeClassName("editing");
     }
+
     private void updateList(OAuth2AuthenticatedPrincipal principal) {
         List<CoordUser> coordUsers = coordUserService.getCoordUserEmail(principal.getAttribute("email"));
-        if(!coordUsers.isEmpty()) {
+        if (!coordUsers.isEmpty()) {
 
             List<Event> events = eventService.findAllEventsByIdAndPendingTrue(coordUsers.get(0));
             grid.setItems(events);
         }
     }
+
     private Component getContent() {
         HorizontalLayout content = new HorizontalLayout(grid, form);
         content.setFlexGrow(2, grid);
@@ -70,12 +77,13 @@ public class PendingEventsView extends VerticalLayout {
         content.setSizeFull();
         return content;
     }
+
     private void configureForm(OAuth2AuthenticatedPrincipal principal) {
 // List<CoordUser> coordUsers = coordUserService.getCoordUserEmail(principal.getAttribute("email"));
         form = new EventForm(coordUserService, hostService.findAllHosts(), placeService.findAllPlaces(), eventService, placeService, principal);
         form.setWidth("25em");
         form.createEvent.addClickListener(buttonClickEvent -> {
-            if(form.eventName.isEmpty()||
+            if (form.eventName.isEmpty() ||
                     form.eventTime.isEmpty() ||
                     form.eventGenres.isEmpty() ||
                     form.dateStart.isEmpty() ||
@@ -85,19 +93,16 @@ public class PendingEventsView extends VerticalLayout {
                     form.maxTickets.isEmpty() ||
                     form.ticketPrice.isEmpty() ||
                     form.host.isEmpty() ||
-                    form.place.isEmpty()){
+                    form.place.isEmpty()) {
                 Notification nonCompleteRegistration = Notification.show("Please enter in all the fields for create event", 3000, Notification.Position.BOTTOM_CENTER);
                 nonCompleteRegistration.addThemeVariants(NotificationVariant.LUMO_ERROR);
-            }
-            else if (Integer.valueOf(form.eventCapacity.getValue()) > Integer.valueOf(form.placeCapacity.getValue())){
+            } else if (Integer.valueOf(form.eventCapacity.getValue()) > Integer.valueOf(form.placeCapacity.getValue())) {
                 Notification nonCompleteRegistration = Notification.show("Event Capacity cannot be greater than Place Capacity", 3000, Notification.Position.BOTTOM_CENTER);
                 nonCompleteRegistration.addThemeVariants(NotificationVariant.LUMO_ERROR);
-            }
-            else if (Integer.valueOf(form.maxTickets.getValue()) > Integer.valueOf(form.eventCapacity.getValue())){
+            } else if (Integer.valueOf(form.maxTickets.getValue()) > Integer.valueOf(form.eventCapacity.getValue())) {
                 Notification nonCompleteRegistration = Notification.show("Max Tickets cannot be greater than Event Capacity", 3000, Notification.Position.BOTTOM_CENTER);
                 nonCompleteRegistration.addThemeVariants(NotificationVariant.LUMO_ERROR);
-            }
-            else {
+            } else {
                 List<CoordUser> coordUserSession = coordUserService.getCoordUserEmail(principal.getAttribute("email"));
                 Long coordUserSessionID = coordUserSession.get(0).getId();
                 eventService.saveEvent(new Event(form.eventName.getValue(), coordUserSession.get(0), form.host.getValue(), form.place.getValue(),
@@ -128,10 +133,12 @@ public class PendingEventsView extends VerticalLayout {
         toolbar.addClassName("toolbar");
         return toolbar;
     }
+
     private void addEvent() {
         grid.asSingleSelect().clear();
         createEvent(new Event());
     }
+
     private void configureGrid() {
         grid = new Grid<>(Event.class);
         grid.addClassName("event-grid");
@@ -144,10 +151,11 @@ public class PendingEventsView extends VerticalLayout {
             editEvent(gridEventComponentValueChangeEvent.getValue());
         });
     }
+
     private void editEvent(Event event) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         OAuth2AuthenticatedPrincipal principal = (OAuth2AuthenticatedPrincipal) authentication.getPrincipal();
-        if(event == null) {
+        if (event == null) {
             closeEditor();
         } else {
             form.eventName.setValue(event.getEventName());
@@ -169,7 +177,7 @@ public class PendingEventsView extends VerticalLayout {
             form.add(form.cancel);
             form.cancel.addThemeVariants(ButtonVariant.LUMO_TERTIARY);
             form.edit.addClickListener(buttonClickEvent -> {
-                if(form.eventName.isEmpty()||
+                if (form.eventName.isEmpty() ||
                         form.eventTime.isEmpty() ||
                         form.eventGenres.isEmpty() ||
                         form.dateStart.isEmpty() ||
@@ -179,19 +187,16 @@ public class PendingEventsView extends VerticalLayout {
                         form.maxTickets.isEmpty() ||
                         form.ticketPrice.isEmpty() ||
                         form.host.isEmpty() ||
-                        form.place.isEmpty()){
+                        form.place.isEmpty()) {
                     Notification nonCompleteRegistration = Notification.show("Please enter in all the fields for create event", 3000, Notification.Position.BOTTOM_CENTER);
                     nonCompleteRegistration.addThemeVariants(NotificationVariant.LUMO_ERROR);
-                }
-                else if (Integer.valueOf(form.eventCapacity.getValue()) > Integer.valueOf(form.placeCapacity.getValue())){
+                } else if (Integer.valueOf(form.eventCapacity.getValue()) > Integer.valueOf(form.placeCapacity.getValue())) {
                     Notification nonCompleteRegistration = Notification.show("Event Capacity cannot be greater than Place Capacity", 3000, Notification.Position.BOTTOM_CENTER);
                     nonCompleteRegistration.addThemeVariants(NotificationVariant.LUMO_ERROR);
-                }
-                else if (Integer.valueOf(form.maxTickets.getValue()) > Integer.valueOf(form.eventCapacity.getValue())){
+                } else if (Integer.valueOf(form.maxTickets.getValue()) > Integer.valueOf(form.eventCapacity.getValue())) {
                     Notification nonCompleteRegistration = Notification.show("Max Tickets cannot be greater than Event Capacity", 3000, Notification.Position.BOTTOM_CENTER);
                     nonCompleteRegistration.addThemeVariants(NotificationVariant.LUMO_ERROR);
-                }
-                else{
+                } else {
                     event.setEventName(form.eventName.getValue());
                     event.setEventGenres(form.eventGenres.getValue());
                     event.setHost(form.host.getValue());
@@ -247,18 +252,11 @@ public class PendingEventsView extends VerticalLayout {
             form.setVisible(true);
         }
     }
-    private List<String> getHostName() {
-        List<Host> hosts = hostService.findAllHosts();
-        List<String> temp = new ArrayList<>();
-        for(int i = 0; i < hosts.size(); i++) {
-            temp.add(hosts.get(i).getHostName());
-        }
-        return temp;
-    }
+
     private void createEvent(Event event) {
-        if(event == null){
+        if (event == null) {
             closeEditor();
-        } else{
+        } else {
             form.setVisible(true);
             addClassName("editing");
         }
