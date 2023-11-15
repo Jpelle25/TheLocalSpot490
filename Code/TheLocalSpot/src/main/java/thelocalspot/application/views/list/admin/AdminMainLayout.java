@@ -7,9 +7,12 @@ import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
+import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.RouterLink;
 import com.vaadin.flow.server.VaadinServletRequest;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
+import thelocalspot.application.views.list.genuser.TicketsView;
+import thelocalspot.application.views.list.genuser.UserEventsView;
 
 public class AdminMainLayout extends AppLayout {
     private static final String LOGOUT_SUCCESS_URL = "/";
@@ -44,10 +47,15 @@ public class AdminMainLayout extends AppLayout {
         addToNavbar(header);
     }
     private void createDrawer() {
-        addToDrawer(
-                new RouterLink("Coordinator View", CoordinatorView.class),
-                new RouterLink("General User View", GenUserView.class),
-                new RouterLink("Host View", HostView.class)
-        );
+
+        RouterLink coordinatorView = new RouterLink("Coordinator View", CoordinatorView.class);
+        RouterLink generalUserView = new RouterLink("General User View", GenUserView.class);
+        RouterLink hostView = new RouterLink("Host View", HostView.class);
+
+        addToDrawer(new VerticalLayout(
+                coordinatorView,
+                generalUserView,
+                hostView
+        ));
     }
 }
