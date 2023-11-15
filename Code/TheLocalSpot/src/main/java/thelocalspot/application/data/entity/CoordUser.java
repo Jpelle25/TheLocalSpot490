@@ -27,7 +27,7 @@ public class CoordUser extends AbstractEntity{
         this.phoneNumber = phoneNumber;
     }
     private String genresToString(Set<String> preferences){
-        return String.join(",",preferences);
+        return String.join(", ",preferences);
     }
     public String getCoordName() {
         return firstName + " " + lastName;
