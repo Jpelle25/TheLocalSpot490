@@ -1,5 +1,4 @@
 package thelocalspot.application.views.list.genuser;
-import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.applayout.DrawerToggle;
 import com.vaadin.flow.component.button.Button;
@@ -8,17 +7,10 @@ import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.RouterLink;
-import com.vaadin.flow.component.icon.Icon;
-import com.vaadin.flow.component.icon.VaadinIcon;
-import com.vaadin.flow.server.VaadinServletRequest;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.core.OAuth2AuthenticatedPrincipal;
-import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import thelocalspot.application.views.list.AfterAuthenticationView;
-import thelocalspot.application.views.list.RegistrationView;
-import thelocalspot.application.views.list.coordinator.PendingEventsView;
-import thelocalspot.application.views.list.host.PlacesView;
 import thelocalspot.application.views.list.sharedfunctions.CheckAccountView;
 public class UserMainLayout extends AppLayout {
     public UserMainLayout() {

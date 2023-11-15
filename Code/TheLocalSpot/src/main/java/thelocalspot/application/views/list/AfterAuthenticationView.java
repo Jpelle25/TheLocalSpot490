@@ -3,7 +3,6 @@ package thelocalspot.application.views.list;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.html.Image;
-import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.server.VaadinServletRequest;
 import jakarta.annotation.security.PermitAll;
@@ -103,7 +102,6 @@ public class AfterAuthenticationView extends VerticalLayout {
             add(image);
         }
         else{
-//            setAlignItems(Alignment.CENTER);
             Button register = new Button("Register Role");
             register.addClickListener(buttonClickEvent -> {
                 register.getUI().ifPresent(ui -> ui.navigate(RegistrationView.class));
@@ -112,7 +110,6 @@ public class AfterAuthenticationView extends VerticalLayout {
             verticalLayout.add(header, register,logoutButton);
             verticalLayout.setAlignItems(Alignment.CENTER);
             add(adminNav, verticalLayout);
-//            add(image);
         }
     }
 }
