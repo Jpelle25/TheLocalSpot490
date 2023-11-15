@@ -27,7 +27,15 @@ public class HostService {
         return hostRepository.findAll();
     }
 
+    public List<Host> getHostSelf(String email){
+        return hostRepository.hostSelf(email);
+    }
+
     public List<Host> findAllHosts(){
         return hostRepository.findAll();
+    }
+
+    public List<Host> getHostEmail(String email){
+        return hostRepository.hostSelf(email);
     }
 }
