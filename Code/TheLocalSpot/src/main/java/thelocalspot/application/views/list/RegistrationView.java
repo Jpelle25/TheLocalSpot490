@@ -4,7 +4,6 @@ import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.combobox.MultiSelectComboBox;
-import com.vaadin.flow.component.datetimepicker.DateTimePicker;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.notification.NotificationVariant;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
@@ -23,14 +22,9 @@ import thelocalspot.application.data.entity.Host;
 import thelocalspot.application.data.service.CoordUserService;
 import thelocalspot.application.data.service.GenUserService;
 import thelocalspot.application.data.service.HostService;
-import thelocalspot.application.views.list.admin.AdminWelcome;
 import thelocalspot.application.views.list.coordinator.CoordinatorWelcome;
 import thelocalspot.application.views.list.genuser.UserWelcome;
 import thelocalspot.application.views.list.host.HostWelcome;
-import java.time.LocalDate;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Locale;
 import java.util.Objects;
 @Route("registration-role")
 @PermitAll

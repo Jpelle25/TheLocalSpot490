@@ -52,7 +52,6 @@ public class CheckAccountView extends VerticalLayout {
         setSpacing(false);
         add(image, firstName, lastName, emailAddress, goBack);
         goBack.addClickListener(buttonClickEvent -> {
-//Admin
             List<GenUser> genUsers = userService.findGenUser(email);
             List<CoordUser> coordUsers = coordUserService.getCoordUserEmail(email);
             List<Host> hosts = hostService.getHostSelf(email);

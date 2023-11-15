@@ -31,20 +31,6 @@ public class GenUser extends AbstractEntity{
         this.preferences = preferencesToString(preferences);
     }
 
-//    public void setId(Long id) {
-//        this.id = id;
-//    }
-//
-//    public Long getId() {
-//        return id;
-//    }
-
-    public String printDetailsTest(Set<String> preferences) {
-        return String.format(
-                "General User[firstName='%s', lastName='%s', email='%s', role='%s', address='%s', zipCode='%d', phoneNumber='%s', preferences='%s']",
-                firstName, lastName, email, role, address, zipCode, phoneNumber, preferencesToString(preferences));
-    }
-
     private String preferencesToString(Set<String> preferences){
         return String.join(", ",preferences);
     }
