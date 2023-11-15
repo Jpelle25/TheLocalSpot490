@@ -4,6 +4,9 @@ import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.combobox.MultiSelectComboBox;
+import com.vaadin.flow.component.datetimepicker.DateTimePicker;
+import com.vaadin.flow.component.notification.Notification;
+import com.vaadin.flow.component.notification.NotificationVariant;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.component.textfield.TextFieldVariant;
@@ -14,11 +17,18 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.core.OAuth2AuthenticatedPrincipal;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
+import thelocalspot.application.data.entity.GenUser;
+import thelocalspot.application.data.entity.Ticket;
+import thelocalspot.application.data.service.GenUserService;
 import thelocalspot.application.views.list.admin.AdminWelcome;
 import thelocalspot.application.views.list.coordinator.CoordinatorWelcome;
 import thelocalspot.application.views.list.genuser.UserWelcome;
 import thelocalspot.application.views.list.host.HostWelcome;
 
+import java.time.LocalDate;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 
 @Route("registration-role")
@@ -26,8 +36,10 @@ import java.util.Objects;
 public class RegistrationView extends VerticalLayout {
 
     private static final String LOGOUT_SUCCESS_URL = "/";
+    GenUserService genUserService;
 
-    public RegistrationView() {
+    public RegistrationView(GenUserService genUserService) {
+        this.genUserService = genUserService;
 
         Button logoutButton = new Button("Logout", click -> {
             UI.getCurrent().getPage().setLocation(LOGOUT_SUCCESS_URL);
@@ -37,15 +49,13 @@ public class RegistrationView extends VerticalLayout {
                     null);
         });
 
-        Button complete = new Button("Finalize");
-//        complete.addClickListener(buttonClickEvent -> complete.getUI().ifPresent(ui -> ui.navigate(TicketsView.class)));
-
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         OAuth2AuthenticatedPrincipal principal = (OAuth2AuthenticatedPrincipal) authentication.getPrincipal();
+
+        //Google Authenticated Inherited Fields
         String givenName = principal.getAttribute("given_name");
         String familyName = principal.getAttribute("family_name");
         String email = principal.getAttribute("email");
-
         TextField firstName = new TextField("First Name", givenName, "");
         firstName.setReadOnly(true);
         TextField lastName = new TextField("Last Name", familyName, "");
@@ -54,38 +64,51 @@ public class RegistrationView extends VerticalLayout {
         emailAddress.setReadOnly(true);
         emailAddress.setWidth("300px");
         emailAddress.addThemeVariants(TextFieldVariant.LUMO_ALIGN_CENTER);
+
+        //Role-Selection
+        Button finalize = new Button("Finalize");
         ComboBox<String> roleSelection = new ComboBox<>("Role Selection");
         roleSelection.setItems("Admin", "Coordinator", "General User", "Host");
+        add(firstName, lastName, emailAddress, roleSelection, logoutButton);
+
+        //Role-Selected Specific Fields
         roleSelection.addValueChangeListener(comboBoxStringComponentValueChangeEvent -> {
             if(Objects.equals(roleSelection.getValue(), "Admin")) {
                 removeAll();
-                complete.addClickListener(buttonClickEvent -> complete.getUI().ifPresent(ui -> ui.navigate(AdminWelcome.class)));
+                finalize.addClickListener(buttonClickEvent -> finalize.getUI().ifPresent(ui -> ui.navigate(AdminWelcome.class)));
                 add(
                         firstName,
                         lastName,
                         emailAddress,
                         roleSelection,
-                        complete,
+                        finalize,
                         logoutButton
                 );
             }
             if(Objects.equals(roleSelection.getValue(), "Coordinator")) {
                 removeAll();
-                complete.addClickListener(buttonClickEvent -> complete.getUI().ifPresent(ui -> ui.navigate(CoordinatorWelcome.class)));
+                finalize.addClickListener(buttonClickEvent -> finalize.getUI().ifPresent(ui -> ui.navigate(CoordinatorWelcome.class)));
                 add(
                         firstName,
                         lastName,
                         emailAddress,
                         roleSelection,
-                        complete,
+                        finalize,
                         logoutButton
                 );
             }
             if(Objects.equals(roleSelection.getValue(), "General User")) {
                 removeAll();
-                complete.addClickListener(buttonClickEvent -> complete.getUI().ifPresent(ui -> ui.navigate(UserWelcome.class)));
                 TextField address = new TextField("Home Address");
+                address.setHelperText("Format: 101 Cherry Lane");
+                TextField zipCode = new TextField("Zip Code");
+                zipCode.setMaxLength(5);
                 TextField phoneNumber = new TextField("Phone Number");
+                phoneNumber.setPattern("^[+]?[(]?[0-9]{3}[)]?[-s.]?[0-9]{3}[-s.]?[0-9]{4,6}$");
+                phoneNumber.setAllowedCharPattern("[0-9()+-]");
+                phoneNumber.setMinLength(5);
+                phoneNumber.setMaxLength(18);
+                phoneNumber.setHelperText("Format: (123)456-7890");
                 MultiSelectComboBox<String> preferences = new MultiSelectComboBox<>("Preferences");
                 preferences.setItems("Music", "Comedy", "Theatre", "Gaming", "Sports", "Recreational");
                 add(
@@ -94,26 +117,39 @@ public class RegistrationView extends VerticalLayout {
                         emailAddress,
                         roleSelection,
                         address,
+                        zipCode,
                         phoneNumber,
                         preferences,
-                        complete,
+                        finalize,
                         logoutButton
                 );
+                finalize.addClickListener(buttonClickEvent ->{
+                    if(address.isEmpty() ||
+                            zipCode.isEmpty() ||
+                            zipCode.isEmpty() ||
+                            phoneNumber.isEmpty() ||
+                            preferences.isEmpty()){
+                        Notification nonCompleteRegistration = Notification.show("Please enter in all the fields for registration", 3000, Notification.Position.BOTTOM_CENTER);
+                        nonCompleteRegistration.addThemeVariants(NotificationVariant.LUMO_ERROR);
+                    }
+                    else {
+                        genUserService.saveUser(new GenUser(givenName, familyName, email, roleSelection.getValue(), address.getValue(), Integer.valueOf(zipCode.getValue()), phoneNumber.getValue(), preferences.getSelectedItems()));
+                        finalize.getUI().ifPresent(ui -> ui.navigate(UserWelcome.class));
+                    }
+                });
 
             }
             if(Objects.equals(roleSelection.getValue(), "Host")) {
                 removeAll();
-                complete.addClickListener(buttonClickEvent -> complete.getUI().ifPresent(ui -> ui.navigate(HostWelcome.class)));
+                finalize.addClickListener(buttonClickEvent -> finalize.getUI().ifPresent(ui -> ui.navigate(HostWelcome.class)));
                 add(
                         firstName,
                         lastName,
                         emailAddress,
                         roleSelection,
-                        complete,
+                        finalize,
                         logoutButton);
             }
         });
-        add(firstName, lastName, emailAddress, roleSelection, logoutButton);
-
     }
 }
