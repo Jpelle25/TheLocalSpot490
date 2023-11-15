@@ -14,8 +14,6 @@ import thelocalspot.application.data.entity.CoordUser;
 import thelocalspot.application.data.entity.Event;
 import thelocalspot.application.data.service.CoordUserService;
 import thelocalspot.application.data.service.EventService;
-import thelocalspot.application.data.service.HostService;
-import thelocalspot.application.data.service.PlaceService;
 
 import java.util.List;
 
@@ -49,6 +47,7 @@ public class DeniedEventsView extends VerticalLayout {
         grid.addColumn(event -> event.getPlace().getPlaceName()).setHeader("Place");
         grid.getColumns().forEach(col -> col.setAutoWidth(true));
     }
+
     private Component getContent() {
         HorizontalLayout content = new HorizontalLayout(grid);
         content.addClassName("content");
@@ -58,7 +57,7 @@ public class DeniedEventsView extends VerticalLayout {
 
     private void updateList(OAuth2AuthenticatedPrincipal principal) {
         List<CoordUser> coordUsers = coordUserService.getCoordUserEmail(principal.getAttribute("email"));
-        if(!coordUsers.isEmpty()) {
+        if (!coordUsers.isEmpty()) {
 
             List<Event> events = eventService.findAllEventsByIdAndDeny(coordUsers.get(0));
             grid.setItems(events);

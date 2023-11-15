@@ -1,13 +1,12 @@
 package thelocalspot.application.data.entity;
 
 import jakarta.persistence.*;
-import jakarta.persistence.criteria.CriteriaBuilder;
 
 import java.util.Set;
 
 @Entity
 @Table(name = "COORDINATOR")
-public class CoordUser extends AbstractEntity{
+public class CoordUser extends AbstractEntity {
     private String firstName;
     private String lastName;
     @Column(name = "GENRE")
@@ -32,9 +31,11 @@ public class CoordUser extends AbstractEntity{
         this.zipCode = zipCode;
         this.phoneNumber = phoneNumber;
     }
-    private String genresToString(Set<String> preferences){
-        return String.join(", ",preferences);
+
+    private String genresToString(Set<String> preferences) {
+        return String.join(", ", preferences);
     }
+
     public String getCoordName() {
         return firstName + " " + lastName;
     }
@@ -42,6 +43,7 @@ public class CoordUser extends AbstractEntity{
     public void setFirstNameName(String firstName) {
         this.firstName = firstName;
     }
+
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }

@@ -1,4 +1,5 @@
 package thelocalspot.application.views.list.coordinator;
+
 import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.applayout.DrawerToggle;
 import com.vaadin.flow.component.button.Button;
@@ -11,14 +12,14 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.core.OAuth2AuthenticatedPrincipal;
 import thelocalspot.application.views.list.AfterAuthenticationView;
-import thelocalspot.application.views.list.genuser.TicketsView;
-import thelocalspot.application.views.list.genuser.UserEventsView;
 import thelocalspot.application.views.list.sharedfunctions.CheckAccountView;
+
 public class CoordinatorMainLayout extends AppLayout {
     public CoordinatorMainLayout() {
         createHeader();
         createDrawer();
     }
+
     private void createHeader() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         OAuth2AuthenticatedPrincipal principal = (OAuth2AuthenticatedPrincipal) authentication.getPrincipal();
@@ -36,6 +37,7 @@ public class CoordinatorMainLayout extends AppLayout {
         header.addClassNames("py-0", "px-m");
         addToNavbar(header);
     }
+
     private void createDrawer() {
 
         RouterLink pendingEvents = new RouterLink("Pending Events", PendingEventsView.class);
