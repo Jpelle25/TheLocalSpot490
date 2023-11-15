@@ -1,5 +1,4 @@
 package thelocalspot.application.views.list.genuser;
-
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.Key;
 import com.vaadin.flow.component.button.Button;
