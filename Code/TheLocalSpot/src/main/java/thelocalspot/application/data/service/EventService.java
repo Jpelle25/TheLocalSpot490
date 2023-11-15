@@ -22,11 +22,34 @@ public class EventService {
             return eventRepository.search(filterText);
         }
     }
-    public List<Event> findAllEventsById(CoordUser filterText){
+    public List<Event> findAllEventsByIdAndPendingTrue(CoordUser filterText){
         return eventRepository.coordID(filterText);
+    }
+    public List<Event> findAllEventsByIdAndApprove(CoordUser filterText){
+        return eventRepository.coordApprove(filterText);
+    }
+    public List<Event> findAllEventsByIdAndDeny(CoordUser filterText){
+        return eventRepository.coordDeny(filterText);
     }
     public List<Event> findAllEventsStatusTrue(){
         return eventRepository.eventStatus();
+    }
+    public List<Event> findAllEventsWithFilterAndStatusTrue(String stringFilter){
+        if(stringFilter == null || stringFilter.isEmpty()){
+            return eventRepository.eventStatus();
+        }
+        else{
+            return eventRepository.eventStatusTrueAndFilter(stringFilter);
+        }
+    }
+    public List<Event> findAllPendingStatusTrue(){
+        return eventRepository.pendingStatus();
+    }
+    public List<Event> coordEvents(Long searchTerm) {
+        return eventRepository.coordEvents(searchTerm);
+    }
+    public List<Event> hostEvents(Long searchTerm){
+        return eventRepository.hostEvents(searchTerm);
     }
     public void deleteEvent(Event event){
         eventRepository.delete(event);
@@ -38,5 +61,4 @@ public class EventService {
         }
         eventRepository.save(event);
     }
-
 }

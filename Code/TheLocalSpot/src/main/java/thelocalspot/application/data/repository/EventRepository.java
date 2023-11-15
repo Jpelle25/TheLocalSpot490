@@ -10,9 +10,27 @@ public interface EventRepository extends JpaRepository<Event, Long> {
             "where lower(c.eventName) like lower(concat('%', :searchTerm, '%')) ")
     List<Event> search(@Param("searchTerm") String searchTerm);
     @Query("select c from Event c " +
-            "where c.coordUser = :searchTerm")
+            "where c.coordUser = :searchTerm and c.pendingStatus = true")
     List<Event> coordID(@Param("searchTerm") CoordUser searchTerm);
+    @Query("select c from Event c " +
+            "where c.coordUser = :searchTerm and c.eventStatus = true")
+    List<Event> coordApprove(@Param("searchTerm") CoordUser searchTerm);
+    @Query("select c from Event c " +
+            "where c.coordUser = :searchTerm and c.pendingStatus = false and c.eventStatus = false")
+    List<Event> coordDeny(@Param("searchTerm") CoordUser searchTerm);
     @Query("select c from Event c " +
             "where c.eventStatus = true")
     List<Event> eventStatus();
+    @Query("select c from Event c " +
+            "where c.eventStatus = true and lower(c.eventGenres) like lower(concat('%', :searchTerm, '%'))")
+    List<Event> eventStatusTrueAndFilter(@Param("searchTerm") String searchTerm);
+    @Query("select c from Event c " +
+            "where c.pendingStatus = true")
+    List<Event> pendingStatus();
+    @Query("select c from Event c " +
+            "where c.coordUser.id = :searchTerm and c.pendingStatus = true")
+    List<Event> coordEvents(@Param("searchTerm") Long searchTerm);
+    @Query("select c from Event c " +
+            "where c.host.id = :searchTerm and c.pendingStatus = true")
+    List<Event> hostEvents(@Param("searchTerm") Long searchTerm);
 }
