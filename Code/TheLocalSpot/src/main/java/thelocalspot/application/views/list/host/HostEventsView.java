@@ -1,30 +1,24 @@
 package thelocalspot.application.views.list.host;
 
 import com.vaadin.flow.component.Component;
-import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.notification.NotificationVariant;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
-import com.vaadin.flow.component.textfield.TextField;
-import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import jakarta.annotation.security.PermitAll;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.core.OAuth2AuthenticatedPrincipal;
-import thelocalspot.application.data.entity.CoordUser;
 import thelocalspot.application.data.entity.Event;
 import thelocalspot.application.data.entity.Host;
 import thelocalspot.application.data.service.CoordUserService;
 import thelocalspot.application.data.service.EventService;
 import thelocalspot.application.data.service.HostService;
 import thelocalspot.application.data.service.PlaceService;
-import thelocalspot.application.views.list.coordinator.EventForm;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @PageTitle("Event Notifications")
@@ -63,7 +57,6 @@ public class HostEventsView extends VerticalLayout {
         OAuth2AuthenticatedPrincipal principal = (OAuth2AuthenticatedPrincipal) authentication.getPrincipal();
         List<Host> hosts = hostService.getHostEmail(principal.getAttribute("email"));
         if(!hosts.isEmpty()) {
-            //List<Event> events = eventService.findAllEventsById(coordUsers.get(0));
             List<Event> events = eventService.hostEvents(hosts.get(0).getId());
             grid.setItems(events);
         }
@@ -164,15 +157,6 @@ public class HostEventsView extends VerticalLayout {
                 updateList();
                 closeEditor();
             });
-        }
-    }
-
-    private void editEvent(Event event) {
-        if(event == null){
-            closeEditor();
-        } else{
-            form.setVisible(true);
-            addClassName("editing");
         }
     }
 }

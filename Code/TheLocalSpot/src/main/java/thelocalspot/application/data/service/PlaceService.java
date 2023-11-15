@@ -1,7 +1,6 @@
 package thelocalspot.application.data.service;
 
 import org.springframework.stereotype.Service;
-import thelocalspot.application.data.entity.GenUser;
 import thelocalspot.application.data.entity.Place;
 import thelocalspot.application.data.repository.PlaceRepository;
 

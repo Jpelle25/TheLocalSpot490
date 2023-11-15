@@ -4,7 +4,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import thelocalspot.application.data.entity.Event;
-import thelocalspot.application.data.entity.GenUser;
 import thelocalspot.application.data.entity.Place;
 
 import java.util.List;
