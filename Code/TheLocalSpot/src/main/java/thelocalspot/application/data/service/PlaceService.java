@@ -21,8 +21,14 @@ public class PlaceService {
         }
         placeRepository.save(place);
     }
-    public List<Place> getHostId(Long hostId){
 
+    public void deletePlace(Place place) {
+        placeRepository.delete(place);
+    }
+    public List<Place> getHostId(Long hostId){
+        return placeRepository.search(hostId);
+    }
+    public List<Place> getPlacesSelf(Long hostId){
         return placeRepository.search(hostId);
     }
     public List<Place> findAllPlaces(){

@@ -1,4 +1,5 @@
 package thelocalspot.application.views.list.genuser;
+
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
@@ -13,12 +14,14 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.core.OAuth2AuthenticatedPrincipal;
 import thelocalspot.application.data.entity.Event;
 import thelocalspot.application.data.entity.GenUser;
+import thelocalspot.application.data.entity.Ticket;
 import thelocalspot.application.data.service.CoordUserService;
 import thelocalspot.application.data.service.EventService;
 import thelocalspot.application.data.service.GenUserService;
 import thelocalspot.application.data.service.TicketService;
 import java.time.LocalDate;
 import java.util.List;
+
 @PageTitle("General User")
 @Route(value = "user-events", layout = UserMainLayout.class)
 @PermitAll
@@ -26,10 +29,13 @@ public class UserEventsView extends VerticalLayout {
     Grid<Event> genUserEventGrid;
     TextField filterText = new TextField();
     EventService eventService;
+
     TicketService ticketService;
+
     CoordUserService coordUserService;
     TicketPurchaseForm ticketPurchaseForm;
     GenUserService genUserService;
+
     public UserEventsView(GenUserService genUserService, EventService eventService, TicketService ticketService, CoordUserService coordUserService) {
         this.genUserService = genUserService;
         this.eventService = eventService;
@@ -42,6 +48,7 @@ public class UserEventsView extends VerticalLayout {
         updateList();
         closeEditor();
     }
+
     private void configureGrid() {
         genUserEventGrid = new Grid<>(Event.class);
         genUserEventGrid.setClassName("gen-user-event-grid");
@@ -55,10 +62,13 @@ public class UserEventsView extends VerticalLayout {
             purchaseEvent(gridEventComponentValueChangeEvent.getValue());
         });
     }
+
     private void configureForm() {
+
         ticketPurchaseForm = new TicketPurchaseForm();
         ticketPurchaseForm.setWidth("25em");
     }
+
     private void purchaseEvent(Event event) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         OAuth2AuthenticatedPrincipal principal = (OAuth2AuthenticatedPrincipal) authentication.getPrincipal();
@@ -95,15 +105,20 @@ public class UserEventsView extends VerticalLayout {
                 closeEditor();
             });
         }
+
     }
+
     private HorizontalLayout getToolbar() {
+
         filterText.setPlaceholder("Filter by Event Genre...");
         filterText.setClearButtonVisible(true);
         filterText.setValueChangeMode(ValueChangeMode.LAZY);
+
         var toolbar = new HorizontalLayout(filterText);
         toolbar.addClassName("gen-user-grid-toolbar");
         return toolbar;
     }
+
     private HorizontalLayout getContent() {
         HorizontalLayout content = new HorizontalLayout(genUserEventGrid, ticketPurchaseForm);
         content.setFlexGrow(2, genUserEventGrid);
@@ -111,9 +126,12 @@ public class UserEventsView extends VerticalLayout {
         content.setSizeFull();
         return content;
     }
+
     private void updateList() {
+
         genUserEventGrid.setItems(eventService.findAllEventsStatusTrue());
     }
+
     private void closeEditor() {
         genUserEventGrid.asSingleSelect().clear();
         ticketPurchaseForm.setVisible(false);

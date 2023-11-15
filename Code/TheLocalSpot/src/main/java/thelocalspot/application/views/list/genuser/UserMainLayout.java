@@ -22,6 +22,7 @@ import thelocalspot.application.views.list.host.PlacesView;
 import thelocalspot.application.views.list.sharedfunctions.CheckAccountView;
 public class UserMainLayout extends AppLayout {
     public UserMainLayout() {
+
         createHeader();
         createDrawer();
     }
@@ -34,6 +35,7 @@ public class UserMainLayout extends AppLayout {
         accountDetails.addClickListener(buttonClickEvent -> accountDetails.getUI().ifPresent(ui -> ui.navigate(CheckAccountView.class)));
         Button homeScreen = new Button("Home");
         homeScreen.addClickListener(buttonClickEvent -> homeScreen.getUI().ifPresent(ui -> ui.navigate(AfterAuthenticationView.class)));
+
         HorizontalLayout header = new HorizontalLayout(new DrawerToggle(), logo, accountDetails, homeScreen);
         header.setDefaultVerticalComponentAlignment(FlexComponent.Alignment.CENTER);
         header.expand(logo);
@@ -42,8 +44,10 @@ public class UserMainLayout extends AppLayout {
         addToNavbar(header);
     }
     private void createDrawer() {
+
         RouterLink browseEvents = new RouterLink("Browse Events", UserEventsView.class);
         RouterLink tickets = new RouterLink("Tickets", TicketsView.class);
+
         addToDrawer(new VerticalLayout(
                 browseEvents,
                 tickets
