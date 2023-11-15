@@ -8,28 +8,21 @@ public class Place extends AbstractEntity{
     private Long hostId;
     private String placeName;
     private String placeAddress;
-    private Integer placeCapacity;
+
+    private Integer zipCode;
+    private String placeCapacity;
     private String placeInfo;
 
     public Place(){
 
     }
 
-    public Place(String placeName, String placeAddress, Integer placeCapacity, String placeInfo){
+    public Place(Long hostId, String placeName, String placeAddress, String placeCapacity, String placeInfo){
+        this.hostId = hostId;
         this.placeName = placeName;
         this.placeAddress = placeAddress;
         this.placeCapacity = placeCapacity;
         this.placeInfo = placeInfo;
-    }
-
-
-    public String getPlaceName() {
-        return placeName;
-    }
-
-
-    public void setPlaceName(String placeName) {
-        this.placeName = placeName;
     }
 
     public Long getHostId() {
@@ -40,27 +33,43 @@ public class Place extends AbstractEntity{
         this.hostId = hostId;
     }
 
-    public String getAddress() {
+    public String getPlaceName() {
+        return placeName;
+    }
+
+    public void setPlaceName(String placeName) {
+        this.placeName = placeName;
+    }
+
+    public String getPlaceAddress() {
         return placeAddress;
     }
 
-    public void setAddress(String address) {
+    public void setPlaceAddress(String placeAddress) {
         this.placeAddress = placeAddress;
     }
 
-    public Integer getCapacity() {
+    public Integer getZipCode() {
+        return zipCode;
+    }
+
+    public void setZipCode(Integer zipCode) {
+        this.zipCode = zipCode;
+    }
+
+    public String getPlaceCapacity() {
         return placeCapacity;
     }
 
-    public void setCapacity(Integer capacity) {
+    public void setPlaceCapacity(String placeCapacity) {
         this.placeCapacity = placeCapacity;
     }
 
-    public String getInformation() {
+    public String getPlaceInfo() {
         return placeInfo;
     }
 
-    public void setInformation(String information) {
+    public void setPlaceInfo(String placeInfo) {
         this.placeInfo = placeInfo;
     }
 }

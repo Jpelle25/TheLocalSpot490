@@ -13,6 +13,7 @@ public class Event extends AbstractEntity {
 // private String hostUserId;
 // private String placeId;
     private boolean eventStatus;
+    private boolean pendingStatus;
     private String eventGenres;
     private String eventName;
     private LocalTime eventTime;
@@ -23,6 +24,7 @@ public class Event extends AbstractEntity {
     private String maxTickets;
     private String availableTickets;
     private Float ticketPrice;
+    private String feedback;
     @ManyToOne
     @JoinColumn(name = "coord_id")
     @NotNull
@@ -38,12 +40,13 @@ public class Event extends AbstractEntity {
     private Place place;
     public Event() {
     }
-    public Event(String eventName, CoordUser coordUser, Host host, Place place, boolean eventStatus, Set<String> eventGenres, LocalTime eventTime, LocalDate dateStart, LocalDate dateEnd, String eventCapacity, String eventInfo, String maxTickets, Float ticketPrice) {
+    public Event(String eventName, CoordUser coordUser, Host host, Place place, boolean eventStatus, boolean pendingStatus, String eventGenres, LocalTime eventTime, LocalDate dateStart, LocalDate dateEnd, String eventCapacity, String eventInfo, String maxTickets, Float ticketPrice, String feedback) {
         this.coordUser = coordUser;
         this.host = host;
         this.place = place;
         this.eventStatus = eventStatus;
-        this.eventGenres = eventGenresToString(eventGenres);
+        this.pendingStatus = pendingStatus;
+        this.eventGenres = eventGenres;
         this.eventName = eventName;
         this.eventTime = eventTime;
         this.dateStart = dateStart;
@@ -53,9 +56,7 @@ public class Event extends AbstractEntity {
         this.maxTickets = maxTickets;
         this.availableTickets = maxTickets;
         this.ticketPrice = ticketPrice;
-    }
-    private String eventGenresToString(Set<String> eventGenres){
-        return String.join(",",eventGenres);
+        this.feedback = feedback;
     }
     public Host getHost() {
         return host;
@@ -63,34 +64,22 @@ public class Event extends AbstractEntity {
     public Place getPlace() {
         return place;
     }
-    // public String getHostUserId() {
-// return hostUserId;
-// }
-//
-// public void setHostUserId(String hostUserId) {
-// this.hostUserId = hostUserId;
-// }
-//
-// public String getPlaceId() {
-// return placeId;
-// }
-//
-// public void setPlaceId(String placeId) {
-// this.placeId = placeId;
-// }
+
     public String getEventGenres() {
         return eventGenres;
     }
     public void setEventGenres(String eventGenres) {
         this.eventGenres = eventGenres;
     }
-    // public String getCoordUserId() {
-// return coordUserId;
-// }
-//
-// public void setCoordUserId(String coordUserId) {
-// this.coordUserId = coordUserId;
-// }
+
+    public boolean isPendingStatus() {
+        return pendingStatus;
+    }
+
+    public void setPendingStatus(boolean pendingStatus) {
+        this.pendingStatus = pendingStatus;
+    }
+
     public boolean isEventStatus() {
         return eventStatus;
     }
@@ -162,5 +151,13 @@ public class Event extends AbstractEntity {
     }
     public void setPlace(Place place) {
         this.place = place;
+    }
+
+    public String getFeedback() {
+        return feedback;
+    }
+
+    public void setFeedback(String feedback) {
+        this.feedback = feedback;
     }
 }

@@ -1,4 +1,5 @@
 package thelocalspot.application.views.list.genuser;
+
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.Key;
 import com.vaadin.flow.component.button.Button;
@@ -13,10 +14,12 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import jakarta.annotation.security.PermitAll;
 import thelocalspot.application.data.entity.Event;
+
 @PageTitle("General User")
 @Route(value = "ticket-purchase-form", layout = UserMainLayout.class)
 @PermitAll
 public class TicketPurchaseForm extends FormLayout {
+
     TextField eventGenre = new TextField("Event Genre");
     TextField eventName = new TextField("Event Name");
     TextField eventTime = new TextField("Event Time");
@@ -26,6 +29,7 @@ public class TicketPurchaseForm extends FormLayout {
     TextField ticketPrice = new TextField("Ticket Price");
     Button purchaseTicket = new Button("Purchase Ticket");
     Button cancel = new Button("Cancel");
+
     public TicketPurchaseForm() {
         addClassName("ticket-purchase-Form");
         eventGenre.setReadOnly(true);
@@ -43,13 +47,8 @@ public class TicketPurchaseForm extends FormLayout {
                 dateEnd,
                 eventInfo,
                 ticketPrice,
-                createButtonsLayout()
+                purchaseTicket,
+                cancel
         );
-    }
-    private HorizontalLayout createButtonsLayout() {
-        purchaseTicket.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
-        cancel.addThemeVariants(ButtonVariant.LUMO_TERTIARY);
-        cancel.addClickShortcut(Key.ESCAPE);
-        return new HorizontalLayout(purchaseTicket, cancel);
     }
 }

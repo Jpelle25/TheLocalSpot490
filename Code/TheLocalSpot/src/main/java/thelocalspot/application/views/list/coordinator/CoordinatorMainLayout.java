@@ -28,6 +28,7 @@ public class CoordinatorMainLayout extends AppLayout {
         accountDetails.addClickListener(buttonClickEvent -> accountDetails.getUI().ifPresent(ui -> ui.navigate(CheckAccountView.class)));
         Button homeScreen = new Button("Home");
         homeScreen.addClickListener(buttonClickEvent -> homeScreen.getUI().ifPresent(ui -> ui.navigate(AfterAuthenticationView.class)));
+
         HorizontalLayout header = new HorizontalLayout(new DrawerToggle(), logo, accountDetails, homeScreen);
         header.setDefaultVerticalComponentAlignment(FlexComponent.Alignment.CENTER);
         header.expand(logo);
@@ -36,9 +37,11 @@ public class CoordinatorMainLayout extends AppLayout {
         addToNavbar(header);
     }
     private void createDrawer() {
+
         RouterLink pendingEvents = new RouterLink("Pending Events", PendingEventsView.class);
         RouterLink approvedEvents = new RouterLink("Approved Events", ApprovedEventsView.class);
         RouterLink deniedEvents = new RouterLink("Denied Events", DeniedEventsView.class);
+
         addToDrawer(new VerticalLayout(
                 pendingEvents,
                 approvedEvents,
