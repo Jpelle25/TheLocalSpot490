@@ -8,8 +8,6 @@ import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.notification.NotificationVariant;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
-import com.vaadin.flow.component.textfield.TextField;
-import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import jakarta.annotation.security.PermitAll;
@@ -20,7 +18,6 @@ import thelocalspot.application.data.entity.Host;
 import thelocalspot.application.data.entity.Place;
 import thelocalspot.application.data.service.HostService;
 import thelocalspot.application.data.service.PlaceService;
-import thelocalspot.application.views.list.coordinator.EventForm;
 
 import java.util.List;
 
@@ -71,7 +68,7 @@ public class PlacesView extends VerticalLayout {
                     form.placeInfo.isEmpty()) {
                 Notification nonCompleteRegistration = Notification.show("Please enter in all the fields for registration", 3000, Notification.Position.BOTTOM_CENTER);
                 nonCompleteRegistration.addThemeVariants(NotificationVariant.LUMO_ERROR);
-            }else {
+            } else {
                 List<Host> hostSelf = hostService.getHostSelf(principal.getAttribute("email"));
                 placeService.savePlace(new Place(hostSelf.get(0).getId(), form.placeName.getValue(), form.placeAddress.getValue(), form.placeCapacity.getValue(), form.placeInfo.getValue()));
                 removeAll();
@@ -89,23 +86,8 @@ public class PlacesView extends VerticalLayout {
         form.cancel.addClickListener(buttonClickEvent -> {
             closeEditor();
         });
-
-//        form.addSaveListener(this::savePlaces); // <1>
-//        form.addDeleteListener(this::deletePlaces); // <2>
-//        form.addCloseListener(e -> closeEditor()); // <3>
     }
 
-//    private void savePlaces(PlacesForm.SaveEvent event, OAuth2AuthenticatedPrincipal principal) {
-//        placeService.savePlace(event.getPlace());
-//        updateList(principal);
-//        closeEditor();
-//    }
-//
-//    private void deletePlaces(PlacesForm.DeleteEvent event, OAuth2AuthenticatedPrincipal principal) {
-//        placeService.deletePlace(event.getPlace());
-//        updateList(principal);
-//        closeEditor();
-//    }
 
     private void configureGrid() {
         grid = new Grid<>(Place.class);
@@ -119,7 +101,7 @@ public class PlacesView extends VerticalLayout {
         });
     }
 
-    private void editPlace(Place place){
+    private void editPlace(Place place) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         OAuth2AuthenticatedPrincipal principal = (OAuth2AuthenticatedPrincipal) authentication.getPrincipal();
         if (place == null) {
@@ -138,14 +120,13 @@ public class PlacesView extends VerticalLayout {
             form.add(form.cancel);
             form.cancel.addThemeVariants(ButtonVariant.LUMO_TERTIARY);
             form.edit.addClickListener(buttonClickEvent -> {
-                if(form.placeName.isEmpty() ||
+                if (form.placeName.isEmpty() ||
                         form.placeAddress.isEmpty() ||
-                        form.placeCapacity.isEmpty()||
-                        form.placeInfo.isEmpty()){
+                        form.placeCapacity.isEmpty() ||
+                        form.placeInfo.isEmpty()) {
                     Notification nonCompleteRegistration = Notification.show("One or more fields is empty", 3000, Notification.Position.BOTTOM_CENTER);
                     nonCompleteRegistration.addThemeVariants(NotificationVariant.LUMO_ERROR);
-                }
-                else{
+                } else {
                     place.setPlaceName(form.placeName.getValue());
                     place.setPlaceAddress(form.placeAddress.getValue());
                     place.setPlaceCapacity(form.placeCapacity.getValue());

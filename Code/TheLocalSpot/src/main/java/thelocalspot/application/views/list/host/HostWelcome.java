@@ -10,7 +10,6 @@ import jakarta.annotation.security.PermitAll;
 @Route(value = "host-welcome", layout = HostMainLayout.class)
 @PermitAll
 public class HostWelcome extends VerticalLayout {
-
     public HostWelcome() {
 
         H1 welcome = new H1("Welcome Host");
