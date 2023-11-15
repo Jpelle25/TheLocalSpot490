@@ -17,8 +17,9 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.core.OAuth2AuthenticatedPrincipal;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
+import thelocalspot.application.data.entity.CoordUser;
 import thelocalspot.application.data.entity.GenUser;
-import thelocalspot.application.data.entity.Ticket;
+import thelocalspot.application.data.service.CoordUserService;
 import thelocalspot.application.data.service.GenUserService;
 import thelocalspot.application.views.list.admin.AdminWelcome;
 import thelocalspot.application.views.list.coordinator.CoordinatorWelcome;
@@ -37,9 +38,11 @@ public class RegistrationView extends VerticalLayout {
 
     private static final String LOGOUT_SUCCESS_URL = "/";
     GenUserService genUserService;
+    CoordUserService coordUserService;
 
-    public RegistrationView(GenUserService genUserService) {
+    public RegistrationView(GenUserService genUserService, CoordUserService coordUserService) {
         this.genUserService = genUserService;
+        this.coordUserService = coordUserService;
 
         Button logoutButton = new Button("Logout", click -> {
             UI.getCurrent().getPage().setLocation(LOGOUT_SUCCESS_URL);
@@ -87,15 +90,44 @@ public class RegistrationView extends VerticalLayout {
             }
             if(Objects.equals(roleSelection.getValue(), "Coordinator")) {
                 removeAll();
-                finalize.addClickListener(buttonClickEvent -> finalize.getUI().ifPresent(ui -> ui.navigate(CoordinatorWelcome.class)));
+                MultiSelectComboBox<String> genres = new MultiSelectComboBox<>("Genre");
+                genres.setItems("Music", "Comedy", "Theatre", "Gaming", "Sports", "Recreational");
+                TextField address = new TextField("Home Address");
+                address.setHelperText("Format: 101 Cherry Lane");
+                TextField zipCode = new TextField("Zip Code");
+                zipCode.setMaxLength(5);
+                TextField phoneNumber = new TextField("Phone Number");
+                phoneNumber.setPattern("^[+]?[(]?[0-9]{3}[)]?[-s.]?[0-9]{3}[-s.]?[0-9]{4,6}$");
+                phoneNumber.setAllowedCharPattern("[0-9()+-]");
+                phoneNumber.setMinLength(5);
+                phoneNumber.setMaxLength(18);
+                phoneNumber.setHelperText("Format: (123)456-7890");
                 add(
                         firstName,
                         lastName,
                         emailAddress,
                         roleSelection,
+                        genres,
+                        address,
+                        zipCode,
+                        phoneNumber,
                         finalize,
                         logoutButton
                 );
+                finalize.addClickListener(buttonClickEvent -> {
+                    if( genres.isEmpty() ||
+                            address.isEmpty() ||
+                            zipCode.isEmpty() ||
+                            zipCode.isEmpty() ||
+                            phoneNumber.isEmpty()){
+                        Notification nonCompleteRegistration = Notification.show("Please enter in all the fields for registration", 3000, Notification.Position.BOTTOM_CENTER);
+                        nonCompleteRegistration.addThemeVariants(NotificationVariant.LUMO_ERROR);
+                    }
+                    else {
+                        coordUserService.saveCordUser(new CoordUser(givenName, familyName, genres.getSelectedItems(), email, roleSelection.getValue(), address.getValue(), Integer.valueOf(zipCode.getValue()), phoneNumber.getValue()));
+                        finalize.getUI().ifPresent(ui -> ui.navigate(CoordinatorWelcome.class));
+                    }
+                });
             }
             if(Objects.equals(roleSelection.getValue(), "General User")) {
                 removeAll();

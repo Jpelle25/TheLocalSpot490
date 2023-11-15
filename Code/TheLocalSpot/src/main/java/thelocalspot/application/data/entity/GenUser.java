@@ -6,7 +6,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "GENUSER")
-public class GenUser extends AbstractEntity{
+public class GenUser extends AbstractEntity {
     private String firstName;
     private String lastName;
     private String email;
@@ -29,6 +29,7 @@ public class GenUser extends AbstractEntity{
         this.phoneNumber = phoneNumber;
         this.preferences = preferencesToString(preferences);
     }
+
 
     public String printDetailsTest(Set<String> preferences) {
         return String.format(
