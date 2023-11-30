@@ -36,7 +36,7 @@ Vaadin Tutorial Link: https://www.youtube.com/watch?v=bxy2JgqqKDU
 
 ## User Manual ##
 
-** 1. Sign in ** 
+### 1. Sign in 
 
 When the application runs, you will be prompted to click "Sign in with Google" in order to input your Google credentials
 
