@@ -28,7 +28,7 @@ This applicaiton uses a framework named Vaadin for all web development needs. A 
 
 IntelliJ
 
-We used IntelliJ for the IDE of choice when running this application. Please download respective IntelliJ download for your operating system following this link: https://www.google.com/search?q=IntelliJ&oq=IntelliJ&gs_lcrp=EgZjaHJvbWUyDwgAEEUYORiDARixAxiABDIGCAEQRRhAMgwIAhAjGCcYgAQYigUyCggDEAAYsQMYgAQyCggEEAAYsQMYgAQyCggFEAAYsQMYgAQyBwgGEAAYgAQyBwgHEAAYgATSAQgyMDM1ajBqN6gCALACAA&sourceid=chrome&ie=UTF-8
+We used IntelliJ for the IDE of choice when running this application. Please download respective IntelliJ download for your operating system following this link: https://www.jetbrains.com/idea/download
 
 Vaadin Familiarity
 
