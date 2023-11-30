@@ -47,39 +47,49 @@ If your account is not yet registered with the application, you will be prompted
 3. General User
 
 - Welcome Page
+
 This is just a screen that appears after entering the application.
 
 - Browse Events
+
 When clicking on this view you will be presented with a list of events of which are considered "live" and after clicking on a respective event you are given the ability to purchase a ticket.
 
 Disclaimer: You have to click on one event at a time and purchase that ticket in its current version.
 
 - Tickets
+
 In this view you are given two options (Transfer Ticket, Purchase History). Each will give proper instructions and display. 
 
 4. Coordinator
 
 - Welcome Page
+
 This is just a screen that appears after entering the application.
 
 - Pending Events
+
 In this view is a grid displaying all "pending" events created to your respective account. In order to create a pending event click on "Add Event" and fill out the form that follows
 
 - Approved Events
+
 In this view it will display all events that are considered "live" and pertain to your account.
 
 - Denied Events
+
 In this view it will display all events that are denied by the host of choice and that also pertain to your account.
 
 5. Host
 
 - Welcome Page
+
 This is just a screen that appears after entering the application.
 
 - Places
+
 In this view is a grid displaying all of your account's places of business. In order to add another place of business, click on the button titled "Add Place" and fill out the respective form.
 
 - Pending Events
+
 In this view is a grid displaying all "pending" events requested by a coordinator through one of your registered places of business. Clicking on the given requests will prompt you to provide feedback and a decision with either approving or denying the given request.
 
 6. Admin
@@ -88,7 +98,9 @@ In the current build, admin functionalities are not fully functional. In order t
 
 7. Miscelaneous
 - Account Details
+
 This button displays brief account info and then the ability to go back to the your given welcome screen.
 
 - Logout
+
 Sends you back to homepage.
