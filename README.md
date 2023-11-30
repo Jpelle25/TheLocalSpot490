@@ -40,11 +40,11 @@ Vaadin Tutorial Link: https://www.youtube.com/watch?v=bxy2JgqqKDU
 
 When the application runs, you will be prompted to click "Sign in with Google" in order to input your Google credentials
 
-2. Registration
+### 2. Registration
 
 If your account is not yet registered with the application, you will be prompted to register for a given client (General User, Coordinator, Host)
 
-3. General User
+### 3. General User
 
 - Welcome Page
 
@@ -60,7 +60,7 @@ Disclaimer: You have to click on one event at a time and purchase that ticket in
 
 In this view you are given two options (Transfer Ticket, Purchase History). Each will give proper instructions and display. 
 
-4. Coordinator
+### 4. Coordinator
 
 - Welcome Page
 
@@ -78,7 +78,7 @@ In this view it will display all events that are considered "live" and pertain t
 
 In this view it will display all events that are denied by the host of choice and that also pertain to your account.
 
-5. Host
+### 5. Host
 
 - Welcome Page
 
@@ -92,11 +92,11 @@ In this view is a grid displaying all of your account's places of business. In o
 
 In this view is a grid displaying all "pending" events requested by a coordinator through one of your registered places of business. Clicking on the given requests will prompt you to provide feedback and a decision with either approving or denying the given request.
 
-6. Admin
+### 6. Admin
 
 In the current build, admin functionalities are not fully functional. In order to view admin capabilities, you have to manually navigate to "http://localhost:8080/admin-welcome" and will be presented with three views(Coordinator View, General User View, and Host View). These views each display the registered clients with the respective roles across the entire application. 
 
-7. Miscelaneous
+### 7. Miscelaneous
 - Account Details
 
 This button displays brief account info and then the ability to go back to the your given welcome screen.
